@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -48,6 +49,8 @@ public final class TablePanel extends JPanel implements MouseListener {
 	private JButton lookUpBarcodesButton;
 
 	private JButton crossReferenceButton;
+
+	private JButton barcodeButton;
 
 	/**
 	 * Instantiates a new table panel.
@@ -96,9 +99,25 @@ public final class TablePanel extends JPanel implements MouseListener {
 			}
 
 		});
+		barcodeButton = new JButton("Enter barcode");
+		barcodeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String barcode="";
+				do{
+					barcode = JOptionPane.showInputDialog("Enter Barcode");
+					
+					if(!barcode.equals("")){
+						defaultTableModel.addRow(new Object[] { barcode });
+					}
+				}while(!barcode.equals(""));
+			}
+		});
+		
 		buttonPanel.add(loadBarcodesButton);
 		buttonPanel.add(lookUpBarcodesButton);
 		buttonPanel.add(crossReferenceButton);
+		buttonPanel.add(barcodeButton);
 
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
