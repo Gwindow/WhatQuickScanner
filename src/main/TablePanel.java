@@ -46,11 +46,13 @@ public final class TablePanel extends JPanel implements MouseListener {
 
 	private JButton loadBarcodesButton;
 
+	private JButton barcodeButton;
+	
+	private JButton clearAllButton;
+	
 	private JButton lookUpBarcodesButton;
 
 	private JButton crossReferenceButton;
-
-	private JButton barcodeButton;
 
 	/**
 	 * Instantiates a new table panel.
@@ -81,6 +83,30 @@ public final class TablePanel extends JPanel implements MouseListener {
 			}
 
 		});
+		barcodeButton = new JButton("Enter barcode");
+		barcodeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String barcode="";
+				do{
+					barcode = JOptionPane.showInputDialog("Enter Barcode (cancel to stop)");
+					
+					if(!barcode.equals("")){
+						defaultTableModel.addRow(new Object[] { barcode });
+					}
+				}while(!barcode.equals(""));
+			}
+		});
+		clearAllButton = new JButton("Clear all");
+		clearAllButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				while(defaultTableModel.getRowCount()>0){
+					defaultTableModel.removeRow(0);
+				}
+			}
+		});
+		
 		lookUpBarcodesButton = new JButton("Look Up Barcodes");
 		lookUpBarcodesButton.addActionListener(new ActionListener() {
 
@@ -99,26 +125,14 @@ public final class TablePanel extends JPanel implements MouseListener {
 			}
 
 		});
-		barcodeButton = new JButton("Enter barcode");
-		barcodeButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String barcode="";
-				do{
-					barcode = JOptionPane.showInputDialog("Enter Barcode");
-					
-					if(!barcode.equals("")){
-						defaultTableModel.addRow(new Object[] { barcode });
-					}
-				}while(!barcode.equals(""));
-			}
-		});
+		
 		
 		buttonPanel.add(loadBarcodesButton);
+		buttonPanel.add(barcodeButton);
+		buttonPanel.add(clearAllButton);
 		buttonPanel.add(lookUpBarcodesButton);
 		buttonPanel.add(crossReferenceButton);
-		buttonPanel.add(barcodeButton);
-
+		
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
 
